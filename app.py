@@ -1,16 +1,18 @@
+import os
 from flask import Flask, render_template, request, redirect, flash
 from flask_mysqldb import MySQL
-import yaml
+from dotenv import dotenv_values, load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "Python-WebApp-CRUD"
 
 # Configure db
-db = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
-app.config['MYSQL_HOST'] = db['MYSQL_HOST']
-app.config['MYSQL_USER'] = db['MYSQL_USER']
-app.config['MYSQL_PASSWORD'] = db['MYSQL_PASSWORD']
-app.config['MYSQL_DB'] = db['MYSQL_DB']
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB')
 
 mysql = MySQL(app)
 
